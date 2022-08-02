@@ -65,6 +65,3 @@ expressHTTPServer.listen(process.env.PORT || 5000, () => {
   console.log('Server is successfully running port on 5000');
 });
 
-httpServer.listen(process.env.PORT || 3000, ()=>{
-  console.log("Server is running @3000");
-})
