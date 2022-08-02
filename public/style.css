@@ -1,0 +1,280 @@
+.main {
+  height: 100vh;
+  /* height: auto; */
+  display: flex;
+}
+
+.main__left {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+}
+
+.main__right {
+  flex: 0.2
+}
+
+.main__videos {
+  flex-grow: 1;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.video_container {
+  position: relative;
+}
+
+.video-content{
+  position: absolute;
+  bottom: 50%;
+  left: 40%;
+  background: #3D3D42;
+  opacity: 0.8;
+  color: #757575;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.fa-expand:before {
+  padding-left: 8px;
+}
+
+
+.main__controls {
+  background-color: #1C1E20;
+}
+
+.main__right {
+  background-color: #ffffff;
+  color: #0e0d0d;
+  border-left: 1px solid #3D3D42;
+}
+
+.main__controls {
+  color: #D2D2D2;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.main__controls__block {
+  display: flex;
+}
+
+.main__controls__button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 10px;
+  min-width: 80px;
+  cursor: pointer;
+  position: relative;
+}
+
+.main__controls__button:hover {
+  background-color: #343434;
+  border-radius: 5px;
+}
+
+.main__controls__button i {
+  font-size: 24px;
+}
+
+.drop_ups_btns {
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  /* right: 30; */
+  left: -30px;
+}
+
+.drop_up_btn {
+  max-width: 30px;
+  height: 35px;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #D2D2D2 ;
+  border-radius: 7px;
+}
+
+.drop_ups_btn.dropdown-toggle::after{
+  margin-right: 4px;
+}
+
+.drop_up_btn:hover {
+  background: #242324;
+}
+
+
+.dropdown-menu {
+  max-width: 420px;
+  width: fit-content;
+  background: #242324 !important;
+  color: #F5F5F5 !important;
+  padding: 15px 5px 5px 10px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.dropdown-item {
+  background: #242324 !important ;
+  color: #F5F5F5 !important;
+  font-size: 14px;
+  font-weight: 100;
+  transition: 0.4s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background: #1E90FF !important;
+  color: #D2D2D2 !important;
+}
+
+.dropdown-divider {
+  background: #696969;
+}
+
+.main__right {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main__header {
+  padding-top: 5px;
+  color: #0e0d0d;
+  text-align: center;
+}
+
+.main__chat_window, .main__participants_window {
+  flex-grow: 1;
+  height: 80vh;
+  border: 1px solid rgb(207, 204, 204);
+  overflow: auto;
+  color: black;
+  background: white;
+  margin-bottom: 10px;
+}
+
+.messages{
+  color: white;
+  list-style: none;
+}
+
+.main__message_container, .main__participant_container {
+  padding: 22px 12px;
+  display: flex;
+  
+}
+
+.main__message_container {
+  height: 10px;
+  width: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #757575;
+  margin: 0 auto 10px;
+  border-radius: 4px;
+}
+
+.main__participant_container {
+  margin-top: 72%;
+}
+
+.main__message_container input {
+  flex-grow: 1;
+  background-color: transparent;
+  border: 0;
+  color: #0c0c0c;
+  width: 80%;
+  outline: 0;
+}
+
+.main__message_container button {
+  /* width: 20%; */
+  background: transparent;
+  border: 0;
+  color: #1E90FF;
+  
+}
+
+.leave_meeting {
+  color: #EB534B;
+}
+
+.unmute, .stop {
+  color: #CC3B33;
+}
+
+.right_dropdown_btn {
+  background: transparent;
+  color: #D2D2D2;
+  border: 0;
+}
+
+.participant {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+}
+
+.participant_detail img{
+  max-width: 30px;
+  max-height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
+
+.participant_name {
+  color: #D2D2D2;
+  padding-left: 10px;
+}
+
+.participant_icons {
+  color: #D2D2D2;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.invite_btn, .mute-all-btn {
+  border: 0;
+  outline: 0;
+  background: #1E90FF;
+  color: #D2D2D2;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
+#chat_box {
+  display: block;
+}
+
+#participant_box {
+  display: none;
+}
+
+#messages{
+  list-style: none;
+  word-break: break-all;
+  
+}
+
+#messages li {
+  color: rgb(15, 15, 15);
+  font-size: 18px;
+  font-weight: 400;
+  overflow-y: scroll;
+}
+
+#selectMic, #selectCam li{
+  cursor: pointer;
+}

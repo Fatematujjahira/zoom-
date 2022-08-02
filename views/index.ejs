@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <style>
+      #video-grid {
+         display: flex;
+         justify-content: center;
+         flex-wrap: wrap;
+      }
+
+      video {
+         
+         height: 270px;
+            width: 400px;
+            object-fit: cover;
+            padding: 8px;
+      }
+   </style>
+
+<script src="/socket.io/socket.io.js" defer></script>
+<script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+<script src="./app.js" defer></script>
+<script src="./msg.js" defer></script>
+
+    <script>
+      const roomId = "<%= roomId%>";
+    </script>
+
+  </head>
+
+  <body>
+    <div class="main">
+       <div class="main__left">
+          <div class="main__videos">
+             <div >
+              <div class="video_container" id="video-grid">
+                <!-- <video></video> -->
+
+                <div class="video-content">
+                   <span><i class="fas fa-volume-mute" ></i></span>
+                   <span id="expand"><i id="video_one" class="fas fa-expand"></i></span>
+                </div>
+              </div>
+             </div>
+          </div>
+          <div class="main__controls">
+            <!-- mute -->
+               <div class="main__controls__block">
+                  <div id="muteBtn" class="main__controls__button" >
+                     <i class="fas fa-microphone"></i>
+                     <span>Mute</span>
+                    </div>
+              
+                     <!------drop up button----->
+                     <div class="drop_ups_btns btn-group dropup">
+                        <button type="button" class="drop_up_btn dropdown-toggle " data-bs-toggle="dropdown"
+                           aria-expanded="false">
+  
+                        </button>
+                        <ul class="dropdown-menu" >
+                          <!-- Here render all mic -->
+                          <li id="selectMic" ><a class="dropdown-item" ></a></li>
+                          <hr class="dropdown-divider">
+                           </li>
+                           <li>Select a Speaker</li>
+                           <li><a class="dropdown-item" href="#">Speakers (High Definition Audio Device)</a></li>
+                           <li><a class="dropdown-item" href="#">Speakers (High Definition Audio Device)</a></li>
+                           <li><a class="dropdown-item" href="#">Same as System (Speakers (High Definition Audio
+                                 Device))</a></li>
+                           <li>
+                              <hr class="dropdown-divider">
+                           </li>
+                           <li><a class="dropdown-item" href="#">Test Speaker & Microphone...</a></li>
+                           <li><a class="dropdown-item" href="#">Leave Computer Audio</a></li>
+                           <li>
+                              <hr class="dropdown-divider">
+                           </li>
+                           <li><a class="dropdown-item" href="#">Audio Settings...</a></li>
+                        </ul>
+                     </div>
+
+                  <!-- camera btn -->
+
+                  <div id="cameraoff" class="main__controls__button main__video_button" >
+                     <i class="fas fa-video"></i>
+                     <span>Stop Video</span>
+                 </div>
+  
+                     <!------ camera drop up button----->
+                     <div class="drop_ups_btns btn-group dropup">
+                        <button type="button" class="drop_up_btn dropdown-toggle " data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                        </button>
+  
+                        <ul class="dropdown-menu" id="selectCam">
+                           <!-- here render all camera -->
+                        </ul>
+  
+                     </div>
+             </div>
+                
+                     <!-- security btn -->
+             <div class="main__controls__block">
+                <div class="main__controls__button">
+                   <i class="fas fa-shield-alt"></i>
+                   <span>Security</span>
+                </div>
+
+                <!-- participent btn -->
+                <div class="main__controls__button" id="participant_button">
+                   <i class="fas fa-user-friends"></i>
+                   <span>Participants</span>
+               </div>
+
+                   <!------drop up button----->
+                   <div class="drop_ups_btns btn-group dropup">
+                      <button type="button" class="drop_up_btn dropdown-toggle " data-bs-toggle="dropdown"
+                         aria-expanded="false">
+                      </button>
+
+                      <ul class="dropdown-menu p-2">
+                         <li><a class="dropdown-item" href="#">Invite</a></li>
+                      </ul>
+
+                   </div>
+                
+
+                <!-- chat btn -->
+                <div class="main__controls__button" id="chat_button">
+                   <i class="fas fa-comment-alt"></i>
+                   <span>Chat</span>
+               </div>
+
+                   <!------drop up button----->
+                  <div class="drop_ups_btns btn-group dropup">
+                     <button type="button" class="drop_up_btn dropdown-toggle " data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                     </button>
+
+                     <ul class="dropdown-menu p-2">
+                        <li><a class="dropdown-item" href="#">Show Chat Previews</a></li>
+                     </ul>
+
+                  </div>
+
+                <!-- share screen btn -->
+                <div class="main__controls__button" id="screenShare">
+                   <div class="bg-success text-dark py-auto px-3 rounded" style="height: 25px">
+                      <i class="fas fa-arrow-up" style="font-size: 16px;"></i>
+                   </div>
+                   <span>Share Screen</span>
+               </div>
+                   <!------ share screen drop up button----->
+                   <div class="drop_ups_btns btn-group dropup">
+                      <button type="button" class="drop_up_btn dropdown-toggle text-success" data-bs-toggle="dropdown"
+                         aria-expanded="false">
+                      </button>
+
+                      <ul class="dropdown-menu p-2">
+                         <!-- data render here -->
+                      </ul>
+
+                   </div>
+                
+             </div>
+             <div class="main__controls__block">
+                <div class="main__controls__button">
+                   <span class="leave_meeting" id="leave-btn">Leave Meeting</span>
+                </div>
+             </div>
+          </div>
+       </div>
+
+       <div class="main__right">
+          <div id="chat_box">
+             <div class="main__header mt-2">
+                <h6>Chat</h6>
+             </div>
+             <div class="main__chat_window">
+               <ul id="messages">
+
+               </ul>
+             </div>
+             <div class="main__message_container">
+                <form id="msgForm">
+                  <input id="chat_message" type="text" placeholder="Type message here...">
+                <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+
+                <!-- Name field -->
+                <form id="nameForm">
+                  <input type="text" placeholder="Type Name Here...">
+                  <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+             </div>
+          </div>
+
+
+          <div id="participant_box">
+             <div class="main__header d-flex mt-2">
+
+                <div class="dropdown right_dropdowns_btns">
+                   <button class="right_dropdown_btn dropdown-toggle ms-2" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                   </button>
+                   <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#"><i class="fas fa-times"></i> Close</a></li>
+                      <li><a class="dropdown-item" href="#"><i class="fas fa-map-pin"></i> Pop Out</a>
+                      </li>
+                   </ul>
+                </div>
+                <h6 class="mx-auto">Participants (8)</h6>
+             </div>
+
+
+             <div class="main__participants_window mt-4">
+                <ul class="participants_list">
+                   <li class="participant mt-3">
+                      <div class="participant_detail">
+                         <span class="paritcipant_img"><img src="./assets/user/profile.jpg" alt=""></span>
+                         <span class="participant_name">Fatema Tuj Jahira</span>
+                      </div>
+                      <div class="d-flex justify-content-center px-3">
+                         <span class="participant_icons"><i class="fas fa-microphone"></i></span>
+                         <span class="participant_icons"> <i class="fas fa-video"></i></span>
+                      </div>
+                   </li>
+
+                   <li class="participant mt-3">
+                      <div class="participant_detail">
+                         <span class="paritcipant_img"><img src="./assets/user/profile2.jpg" alt=""></span>
+                         <span class="participant_name">Feerdous Alam</span>
+                      </div>
+                      <div class="d-flex justify-content-center px-3">
+                         <span class="participant_icons"><i class="fas fa-microphone"></i></span>
+                         <span class="participant_icons"> <i class="fas fa-video"></i></span>
+                      </div>
+                   </li>
+
+                   <li class="participant mt-3">
+                      <div class="participant_detail">
+                         <span class="paritcipant_img"><img src="./assets/user/profile3.jpg" alt=""></span>
+                         <span class="participant_name">שִׂמְחָה סרקר</span>
+                      </div>
+                      <div class="d-flex justify-content-center px-3">
+                         <span class="participant_icons"><i class="fas fa-microphone"></i></span>
+                         <span class="participant_icons"> <i class="fas fa-video"></i></span>
+                      </div>
+                   </li>
+
+                   <li class="participant mt-3">
+                      <div class="participant_detail">
+                         <span class="paritcipant_img"><img src="./assets/user/profile4.jpg" alt=""></span>
+                         <span class="participant_name">Dipto Das</span>
+                      </div>
+                      <div class="d-flex justify-content-center px-3">
+                         <span class="participant_icons"><i class="fas fa-microphone"></i></span>
+                         <span class="participant_icons"> <i class="fas fa-video"></i></span>
+                      </div>
+                   </li>
+
+                   <li class="participant mt-3">
+                      <div class="participant_detail">
+                         <span class="paritcipant_img"><img src="./assets/user/profile5.jpg" alt=""></span>
+                         <span class="participant_name">Md. Gulamur Rahman</span>
+                      </div>
+                      <div class="d-flex justify-content-center px-3">
+                         <span class="participant_icons"><i class="fas fa-microphone"></i></span>
+                         <span class="participant_icons"> <i class="fas fa-video"></i></span>
+                      </div>
+                   </li>
+
+                   <li class="participant mt-3">
+                      <div class="participant_detail">
+                         <span class="paritcipant_img"><img src="./assets/user/profile6.jpg" alt=""></span>
+                         <span class="participant_name">Programmer Wahid</span>
+                      </div>
+                      <div class="d-flex justify-content-center px-3">
+                         <span class="participant_icons"><i class="fas fa-microphone"></i></span>
+                         <span class="participant_icons"> <i class="fas fa-video"></i></span>
+                      </div>
+                   </li>
+
+                   <li class="participant mt-3">
+                      <div class="participant_detail">
+                         <span class="paritcipant_img"><img src="./assets/user/profile7.jpg" alt=""></span>
+                         <span class="participant_name">Mehedi Hasan</span>
+                      </div>
+                      <div class="d-flex justify-content-center px-3">
+                         <span class="participant_icons"><i class="fas fa-microphone"></i></span>
+                         <span class="participant_icons"> <i class="fas fa-video"></i></span>
+                      </div>
+                   </li>
+
+                   <li class="participant mt-3">
+                      <div class="participant_detail">
+                         <span class="paritcipant_img"><img src="./assets/user/profile8.jpg" alt=""></span>
+                         <span class="participant_name">Md. Rokibul Hasan</span>
+                      </div>
+                      <div class="d-flex justify-content-center px-3">
+                         <span class="participant_icons"><i class="fas fa-microphone"></i></span>
+                         <span class="participant_icons"> <i class="fas fa-video"></i></span>
+                      </div>
+                   </li>
+                </ul>
+
+             </div>
+
+             <div class="main__participant_container justify-content-around">
+                <button class="invite_btn">Invite</button>
+
+                <button class="mute-all-btn">Mute All</button>
+
+             </div>
+          </div>
+       </div>
+
+
+
+
+
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js">
+       </script>
+ </body>
+
+</html>
